@@ -1,0 +1,237 @@
+       #!/usr/bin/env python3
+       
+    1: """
+       Quicksort implementations using normal partitioning
+       and also using median of three partitioning. Uses
+       cprofile to compare function calls. Also prints out
+       the number of swaps that occur with each method.
+       
+       Normal quicksort and the partitioning portions of this
+       code were derived from the psuedo-code in our textbook
+       in Chapter 7 section 1 (page 171).
+       """
+       
+    1: import math
+    1: import sys
+    1: import os
+    1: import cProfile
+       
+       # adjusted to allow for more recursive calls
+    1: sys.setrecursionlimit(20000)
+       
+       # count the number of swaps in each partitioning strategy
+    1: swaps = 0
+       
+       
+    1: def usage():
+           """Simple CLI usage printout.
+           """
+           print(f'Usage: {sys.argv[0]} [test file]')
+           print()
+           print('Args:')
+           print('\ttest file - input file of integers to sort')
+           print('\t-p, --profile - [optional] count calls instead of results')
+           exit(0)
+       
+       
+    1: def process_args():
+           """A simple CLI args handler.
+       
+           Returns:
+               Tuple: filename with integers and a boolean to use the profiler
+           """
+    1:     filename = None
+    1:     profile = False
+    1:     if '-h' in sys.argv or '--help' in sys.argv:
+               usage()
+    1:     if len(sys.argv) >= 3:
+               if sys.argv[2] in ('--profile', '-p', '-p'):
+                   profile = True
+               filename = sys.argv[1]
+    1:     elif len(sys.argv) >= 2:
+    1:         filename = sys.argv[1]
+           else:
+               dir_path = os.path.dirname(os.path.realpath(__file__))
+               filename = f'{dir_path}/TestFiles/TestInput25.txt'
+    1:     return filename, profile
+       
+       
+    1: def get_input_array(filename):
+           """Reads the data set into an array from a file
+       
+           Returns:
+               List(int): a list of integers
+           """
+    2:     array = list()
+    2:     with open(filename, 'r') as fin:
+20002:         for line in fin.readlines():
+20000:             array.append(int(line))
+    2:     return array
+       
+       
+    1: def median_of_three_pivot(array: list, start: int, end: int):
+           """Selects the median of the 3 values at start, end, and
+           a calculated mid index of array.
+       
+           Args:
+               array (list): list of integers to partition
+               start (int): starting index to partition
+               end (int): last index to consider in the partition
+       
+           Returns:
+               int: pivot index
+           """
+ 5792:     mid = math.floor((start + end) / 2)
+       
+           # find median of array from these indices
+ 5792:     order_length = 3
+ 5792:     order = [start, mid, end]
+       
+           # insert sort over order
+23168:     for index in range(order_length):
+17376:         insertVal = order[index]
+17376:         insertPos = index
+72114:         while insertPos >= 0 and \
+31523:                 array[order[insertPos - 1]] > array[insertVal]:
+23215:             order[insertPos] = order[insertPos - 1]
+23215:             insertPos -= 1
+17376:         order[insertPos] = insertVal
+           # order[1] is the index of the median in my array between
+           # indices start, mid, and end
+ 5792:     return order[1]
+       
+       
+    1: def median_of_three_partition(array: list, start: int, end: int):
+           """[summary]
+       
+           Args:
+               array (list): list of integers to partition
+               start (int): starting index to partition
+               end (int): last index to consider in the partition
+       
+           Returns:
+               int: the index of the pivot for the subarry in [start, end]
+           """
+       
+           global swaps
+       
+ 5792:     pivot = median_of_three_pivot(array, start, end)
+           # swap end and pivot
+ 5792:     array[end], array[pivot] = array[pivot], array[end]
+ 5792:     pivot = end
+       
+ 5792:     lower = start - 1
+ 5792:     higher = start
+       
+           # partition
+136466:     while higher < end:
+130674:         if array[higher] <= array[pivot]:
+65957:             lower += 1
+65957:             array[lower], array[higher] = array[higher], array[lower]
+65957:             swaps += 1
+130674:         higher += 1
+       
+           # swap pivot to the mid point
+ 5792:     array[lower + 1], array[end] = array[end], array[lower + 1]
+ 5792:     return lower + 1
+       
+       
+    1: def quicksort_mot(array: list, start: int, end: int):
+           """[summary]
+       
+           Args:
+               array (list): list of integers to partition
+               start (int): starting index to partition
+               end (int): last index to consider in the partition
+           """
+11585:     if start < end:
+ 5792:         partition = median_of_three_partition(array, start, end)
+ 5792:         quicksort_mot(array, start, partition - 1)
+ 5792:         quicksort_mot(array, partition + 1, end)
+       
+       
+    1: def vanilla_partition(array: list, start: int, end: int):
+           """Normal partition for quicksort which selects end
+           as the pivot.
+       
+           Args:
+               array (list): list of integers to partition
+               start (int): starting index to partition
+               end (int): last index to consider in the partition
+       
+           Returns:
+               int: the index of the pivot for the subarry in [start, end]
+           """
+       
+           global swaps
+       
+ 6640:     pivot = end
+ 6640:     lower = start - 1
+ 6640:     higher = start
+       
+           # partition
+169716:     while higher < end:
+163076:         if array[higher] <= array[pivot]:
+99581:             lower += 1
+99581:             array[lower], array[higher] = array[higher], array[lower]
+99581:             swaps += 1
+163076:         higher += 1
+       
+           # swap pivot to the mid point
+ 6640:     array[lower + 1], array[end] = array[end], array[lower + 1]
+ 6640:     return lower + 1
+       
+       
+    1: def quicksort_vanilla(array: list, start: int, end: int):
+           """Normal quicksort method
+       
+           Args:
+               array (list): list of integers to partition
+               start (int): starting index to partition
+               end (int): last index to consider in the partition
+           """
+13281:     if start < end:
+ 6640:         partition = vanilla_partition(array, start, end)
+ 6640:         quicksort_vanilla(array, start, partition - 1)
+ 6640:         quicksort_vanilla(array, partition + 1, end)
+       
+       
+    1: def write_results(filename, unsorted_array, array, strategy):
+       
+    2:     output = 'Input\n\n'
+20004:     nums_str = [str(num) for num in unsorted_array]
+    2:     unsorted_as_str = ', '.join(nums_str)
+    2:     output = f'{output}{unsorted_as_str}\n\n'
+       
+    2:     output = f'{output}Output:\n\n'
+20004:     nums_str = [str(num) for num in array]
+    2:     sorted_as_str = ', '.join(nums_str)
+    2:     output = f'{output}{sorted_as_str}\n\nSwaps: {swaps}'
+       
+    2:     inputDescription = os.path.basename(filename).split('.')[0]
+    2:     outfile = f'SampleTestResults/TestResult-{inputDescription}-{strategy}.txt'
+    2:     with open(outfile, 'w') as fout:
+    2:         fout.writelines(output)
+       
+       
+    1: if __name__ == '__main__':
+       
+    1:     filename, profile = process_args()
+    1:     array = get_input_array(filename)
+    1:     unsorted_array = array.copy()
+    1:     if profile:
+               cProfile.run('quicksort_mot(array, 0, len(array) - 1)')
+           else:
+    1:         quicksort_mot(array, 0, len(array) - 1)
+    1:         write_results(filename, unsorted_array, array, 'mot')
+    1:     print(f'Swaps: {swaps}')
+       
+    1:     swaps = 0
+    1:     array = get_input_array(filename)
+    1:     unsorted_array = array.copy()
+    1:     if profile:
+               cProfile.run('quicksort_vanilla(array, 0, len(array) - 1)')
+           else:
+    1:         quicksort_vanilla(array, 0, len(array) - 1)
+    1:         write_results(filename, unsorted_array, array, 'normal')
+    1:     print(f'Swaps: {swaps}')

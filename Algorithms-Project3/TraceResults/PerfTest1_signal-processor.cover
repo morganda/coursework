@@ -1,0 +1,320 @@
+       #!/usr/bin/env python3
+       
+    1: import sys
+    1: import cProfile
+       
+       
+    2: class SignalReader:
+    1:     """Class to handle processing the input stream.
+           """
+       
+    1:     def __init__(self, stream: str, sigx, sigy) -> None:
+    1:         self.stream = stream
+       
+               # only chars in sigx and sigy are valid
+    1:         self.allowed_symbols = set(sigx).union(set(sigy))
+       
+               # index in the read stream
+    1:         self.cursor = 0
+       
+               # track most recently detected symbol
+    1:         self.most_recent_signal = ''
+    1:         self.most_recent_signal_index = 0
+       
+    1:     def network_read(self, character: str):
+               """Allows adding one additional character to help simulate
+               a stream we're reading.
+       
+               Args:
+                   character (str): the character to append to stream
+               """
+               self.stream += character
+       
+    1:     def next_signal(self):
+               """Reads over stream until it finds a set of valid
+               characters making up a potentially interwoven
+               signal.
+       
+               Returns:
+                   string: a subset of stream of allowed characters
+               """
+    1:         signal = ''
+       
+               # skip invalid chars
+    2:         while self.cursor < len(self.stream) and \
+    1:                 self.stream[self.cursor] not in self.allowed_symbols:
+                   self.cursor += 1
+       
+               # append to existing signal if there were no invalid
+               #   symbols read since the last call to next_signal
+    1:         if self.most_recent_signal_index + 1 == self.cursor:
+                   signal += self.most_recent_signal
+       
+               # capture next set of valid chars
+  201:         while self.cursor < len(self.stream) and \
+  100:                 self.stream[self.cursor] in self.allowed_symbols:
+       
+  100:             signal += self.stream[self.cursor]
+  100:             self.cursor += 1
+       
+    1:         self.most_recent_signal = signal
+    1:         self.most_recent_signal_index = self.cursor - 1
+    1:         return signal
+       
+    1:     def has_next(self):
+               """Checks if there is another possible sequence of
+               interwoven strings.
+       
+               Returns:
+                   boolean: True if there is anothe signal to validate
+               """
+               # pass over bad symbols
+    3:         while self.cursor < len(self.stream) and \
+    1:                 self.stream[self.cursor] not in self.allowed_symbols:
+                   self.cursor += 1
+    2:         return self.cursor < len(self.stream)
+       
+       
+    1: def signal_processor_dp(sigx, sigy, stream, verbose=False):
+           """Dynamic programming construction of a table that
+           finds possible interweaving of six and sigy in stream.
+       
+           Args:
+               sigx (string): x signal to match in stream
+               sigy (string): y signal to match in stream
+               stream (string): stream to detect interwoven signals in
+               verbose (bool, optional): Print calculated table. Defaults to False.
+       
+           Returns:
+               [type]: [description]
+           """
+           # 2d array that we dynamically size
+    1:     iw_table = list()
+       
+           # i and j correspond to the row and column in the DP table
+           #   simplified names are used to make the code more readable
+    1:     j = 0
+  102:     for i in range(len(stream)+1):
+  101:         iw_table.append(list())
+ 5252:         while j <= len(stream) and i+j-1 < len(stream):
+ 5151:             iw_table[i].append(False)
+       
+                   # pad mamtch signals dynamically for repeat matches
+ 5151:             if i == len(sigx):
+    6:                 sigx = sigx * 2
+ 5151:             if j == len(sigy):
+    6:                 sigy = sigy * 2
+       
+                   # table[0][0] is a default True since it doesn't correspond to
+                   #   a signal match
+ 5151:             if i == 0 and j == 0:
+    1:                 iw_table[i][j] = True
+ 5150:             elif i == 0:
+  200:                 iw_table[i][j] = iw_table[i][j-1] and \
+    1:                     sigy[j-1] == stream[i+j-1]
+ 5050:             elif j == 0:
+  200:                 iw_table[i][j] = iw_table[i-1][j] and \
+    3:                     sigx[i-1] == stream[i+j-1]
+                   else:
+10037:                 iw_table[i][j] = (iw_table[i-1][j] and
+  137:                                   sigx[i-1] == stream[i+j-1]) \
+ 4872:                     or (iw_table[i][j-1] and sigy[j-1] == stream[i+j-1])
+ 5151:             j += 1
+  101:         j = 0
+       
+    1:     if verbose:
+               print('Answer table:')
+               for m in range(len(iw_table)):
+                   print(','.join([str(val) for val in iw_table[m]]))
+               print()
+       
+    1:     return iw_table
+       
+       
+    1: def reconstruct_matches(iw_table, sigx, sigy):
+           """Reconstruct the matched interwoven signals from
+           the table calculated
+       
+           Args:
+               table (list(list(boolean))): a 2D list of booleans - True indicates a
+                                               match
+               sigx (string): sigx string to match
+               sigy (string): sigy string to match
+       
+           Returns:
+               Tuple(string, string): the detected interweaving of sigx, sigy
+           """
+       
+           # find end match marker
+    1:     endi = 0
+   61:     while endi < len(iw_table):
+   61:         endj = len(iw_table[endi]) - 1
+   61:         if iw_table[endi][endj] is True:
+    1:             break
+   60:         endi += 1
+       
+    1:     if endi >= len(iw_table):
+               return '', ''
+       
+           # count matched dimensions
+    1:     sigx_c = 0
+    1:     sigy_c = 0
+       
+           # pad signals to greater than the table size
+    1:     sigx = sigx * int((len(iw_table)/len(sigx) + 1))
+    1:     sigy = sigy * int((len(iw_table)/len(sigy) + 1))
+  101:     while endi > 0 or endj > 0:
+  100:         if endj > 0 and iw_table[endi][endj - 1] is True:
+   40:             sigy_c += 1
+   40:             endj -= 1
+   60:         elif iw_table[endi - 1][endj] is True:
+   60:             sigx_c += 1
+   60:             endi -= 1
+       
+    1:     return sigx[:sigx_c], sigy[:sigy_c]
+       
+       
+    1: def read_signal_input_file(filename):
+           """Reads input from a file
+       
+           Args:
+               filename (string): name of the file with the test case
+       
+           Returns:
+               list(string): a 3-tuple of the x, y strings to match and
+                               and a string representing the stream of chars
+           """
+    1:     inputs = list()
+    1:     with open(filename, 'r') as fin:
+    4:         for line in fin.readlines():
+    3:             inputs.append(line.strip())
+    1:     return inputs
+       
+       
+    1: def is_better_signal(best_signal, sigx_matches, sigy_matches):
+           """Returns true if the new signal check is a longer match
+           than the previous match.
+       
+           Args:
+               best_signal (dict[str, str]): dict containing best match yet
+               sigx_matches (str): detected interwoven sigx singals
+               sigy_matches (str): detected interwoven sigy signals
+       
+           Returns:
+               boolean: True if the new signal is a longer match
+           """
+           # check if new best match
+    1:     signal_match_length = len(sigx_matches) + len(sigy_matches)
+    1:     if best_signal['SIGX'] is None:
+    1:         best_match_length = 0
+           else:
+               best_match_length = len(best_signal['SIGX']) + \
+                   len(best_signal['SIGY'])
+    1:     if signal_match_length > best_match_length:
+    1:         return True
+           return False
+       
+       
+    1: def usage():
+           """Print the usage summary of the program
+           """
+           print(f'Usage: ./{sys.argv[0]} filename [--stream]')
+           print()
+           print('Args:')
+           print('\tfilename - name of the input file')
+           print()
+           print('Options:')
+           print('\t--stream - (optional) read stream one char at a time and attempt \
+                 to analyze the substring before continuing on')
+           print('\t--profile - (optional) Run profiler output for key code')
+       
+       
+    1: def process_args(args: list):
+           """List of arguments to the application
+       
+           Args:
+               args (list): arguments to the application
+       
+           Returns:
+               Tuple(string, boolean, boolean): (filename of input,
+                   to process as a stream or as a whole,
+                   whether to profile or not)
+           """
+    1:     as_stream = False
+    1:     profile = False
+    1:     if '--stream' in args:
+               as_stream = True
+               args.remove('--stream')
+    1:     if '--profile' in args:
+               profile = True
+               args.remove('--profile')
+    1:     if len(args) == 1:
+    1:         filename = args[0]
+           else:
+               print(args)
+               usage()
+               exit(1)
+       
+    1:     return filename, as_stream, profile
+       
+       
+    1: def main(stream, sigx, sigy, as_stream):
+           # track the best signal detected
+    1:     best_signal = {
+    1:         'SIGX': None,
+    1:         'SIGY': None
+           }
+       
+           # simulate live stream
+    1:     if as_stream:
+               signal_reader = SignalReader('', sigx, sigy)
+               stream_length = len(stream)
+           else:
+    1:         signal_reader = SignalReader(stream, sigx, sigy)
+    1:         stream_length = 1
+    2:     for i in range(stream_length):
+               # simulate stream by calculating
+    1:         if as_stream:
+                   signal_reader.network_read(stream[i])
+    2:         while signal_reader.has_next():
+    1:             possible_signal = signal_reader.next_signal()
+    1:             print(f'Found Possible Signal: {possible_signal}')
+       
+                   # Optimization: track sub tables for partial signals
+    1:             table = signal_processor_dp(sigx, sigy, possible_signal)
+    1:             sigx_matches, sigy_matches = reconstruct_matches(table, sigx, sigy)
+       
+                   # check for valid signal
+    1:             if sigx_matches.startswith(sigx) and sigy_matches.startswith(sigy):
+       
+                       # track best detected signal
+    1:                 if is_better_signal(best_signal, sigx_matches, sigy_matches):
+    1:                     best_signal['SIGX'] = sigx_matches
+    1:                     best_signal['SIGY'] = sigy_matches
+       
+                       # print signal
+    1:                 print('Interwoven Signals:')
+    1:                 print(f'\tSIGX: {sigx_matches}')
+    1:                 print(f'\tSIGY: {sigy_matches}')
+                   else:
+                       print('Invalid Signal')
+    1:             print()
+       
+    1:     if best_signal['SIGX'] is not None:
+    1:         print('Best Match:')
+    1:         print(f'\tSIGX: {best_signal["SIGX"]}')
+    1:         print(f'\tSIGY: {best_signal["SIGY"]}')
+           else:
+               print('No valid signal detected')
+       
+       
+    1: if __name__ == '__main__':
+           """Main Driver
+           """
+    1:     filename, as_stream, profile = process_args(sys.argv[1:])
+    1:     SIGX, SIGY, STREAM = read_signal_input_file(filename)
+       
+    1:     if profile:
+               cProfile.run('main(STREAM, SIGX, SIGY, as_stream)')
+           else:
+    1:         main(STREAM, SIGX, SIGY, as_stream)

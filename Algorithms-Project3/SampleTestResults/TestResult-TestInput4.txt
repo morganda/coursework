@@ -1,0 +1,414 @@
+Input:
+101
+00
+1@@10001010110001010110@@@@100010101100010101100010101100010101100010101@@@@@@@@@ 10001@1
+
+
+Output:
+
+Found Possible Signal: 1
+Invalid Signal
+
+Found Possible Signal: 10001010110001010110
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 0000000
+
+Found Possible Signal: 100010101100010101100010101100010101100010101
+Interwoven Signals:
+	SIGX: 101101101101101101101101101101
+	SIGY: 000000000000000
+
+Found Possible Signal: 10001
+Interwoven Signals:
+	SIGX: 101
+	SIGY: 00
+
+Found Possible Signal: 1
+Invalid Signal
+
+Best Match:
+	SIGX: 101101101101101101101101101101
+	SIGY: 000000000000000
+         7240 function calls in 0.001 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.001    0.001 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:11(__init__)
+        5    0.000    0.000    0.000    0.000 signal-processor.py:134(reconstruct_matches)
+        3    0.000    0.000    0.000    0.000 signal-processor.py:194(is_better_signal)
+        1    0.000    0.000    0.001    0.001 signal-processor.py:256(main)
+        5    0.000    0.000    0.000    0.000 signal-processor.py:33(next_signal)
+        6    0.000    0.000    0.000    0.000 signal-processor.py:64(has_next)
+        5    0.001    0.000    0.001    0.000 signal-processor.py:78(signal_processor_dp)
+        1    0.000    0.000    0.001    0.001 {built-in method builtins.exec}
+     5762    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+       24    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+     1416    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        8    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'union' of 'set' objects}
+
+
+Output (with --stream):
+
+Found Possible Signal: 1
+Invalid Signal
+
+Found Possible Signal: 1
+Invalid Signal
+
+Found Possible Signal: 10
+Invalid Signal
+
+Found Possible Signal: 100
+Invalid Signal
+
+Found Possible Signal: 1000
+Invalid Signal
+
+Found Possible Signal: 10001
+Interwoven Signals:
+	SIGX: 101
+	SIGY: 00
+
+Found Possible Signal: 100010
+Interwoven Signals:
+	SIGX: 101
+	SIGY: 000
+
+Found Possible Signal: 1000101
+Interwoven Signals:
+	SIGX: 1011
+	SIGY: 000
+
+Found Possible Signal: 10001010
+Interwoven Signals:
+	SIGX: 1011
+	SIGY: 0000
+
+Found Possible Signal: 100010101
+Interwoven Signals:
+	SIGX: 101101
+	SIGY: 000
+
+Found Possible Signal: 1000101011
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 000
+
+Found Possible Signal: 10001010110
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 0000
+
+Found Possible Signal: 100010101100
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 00000
+
+Found Possible Signal: 1000101011000
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 000000
+
+Found Possible Signal: 10001010110001
+Interwoven Signals:
+	SIGX: 101101101
+	SIGY: 00000
+
+Found Possible Signal: 100010101100010
+Interwoven Signals:
+	SIGX: 101101101
+	SIGY: 000000
+
+Found Possible Signal: 1000101011000101
+Interwoven Signals:
+	SIGX: 1011011011
+	SIGY: 000000
+
+Found Possible Signal: 10001010110001010
+Interwoven Signals:
+	SIGX: 1011011011
+	SIGY: 0000000
+
+Found Possible Signal: 100010101100010101
+Interwoven Signals:
+	SIGX: 101101101101
+	SIGY: 000000
+
+Found Possible Signal: 1000101011000101011
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 000000
+
+Found Possible Signal: 10001010110001010110
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 0000000
+
+Found Possible Signal: 1
+Invalid Signal
+
+Found Possible Signal: 10
+Invalid Signal
+
+Found Possible Signal: 100
+Invalid Signal
+
+Found Possible Signal: 1000
+Invalid Signal
+
+Found Possible Signal: 10001
+Interwoven Signals:
+	SIGX: 101
+	SIGY: 00
+
+Found Possible Signal: 100010
+Interwoven Signals:
+	SIGX: 101
+	SIGY: 000
+
+Found Possible Signal: 1000101
+Interwoven Signals:
+	SIGX: 1011
+	SIGY: 000
+
+Found Possible Signal: 10001010
+Interwoven Signals:
+	SIGX: 1011
+	SIGY: 0000
+
+Found Possible Signal: 100010101
+Interwoven Signals:
+	SIGX: 101101
+	SIGY: 000
+
+Found Possible Signal: 1000101011
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 000
+
+Found Possible Signal: 10001010110
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 0000
+
+Found Possible Signal: 100010101100
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 00000
+
+Found Possible Signal: 1000101011000
+Interwoven Signals:
+	SIGX: 1011011
+	SIGY: 000000
+
+Found Possible Signal: 10001010110001
+Interwoven Signals:
+	SIGX: 101101101
+	SIGY: 00000
+
+Found Possible Signal: 100010101100010
+Interwoven Signals:
+	SIGX: 101101101
+	SIGY: 000000
+
+Found Possible Signal: 1000101011000101
+Interwoven Signals:
+	SIGX: 1011011011
+	SIGY: 000000
+
+Found Possible Signal: 10001010110001010
+Interwoven Signals:
+	SIGX: 1011011011
+	SIGY: 0000000
+
+Found Possible Signal: 100010101100010101
+Interwoven Signals:
+	SIGX: 101101101101
+	SIGY: 000000
+
+Found Possible Signal: 1000101011000101011
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 000000
+
+Found Possible Signal: 10001010110001010110
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 0000000
+
+Found Possible Signal: 100010101100010101100
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 00000000
+
+Found Possible Signal: 1000101011000101011000
+Interwoven Signals:
+	SIGX: 1011011011011
+	SIGY: 000000000
+
+Found Possible Signal: 10001010110001010110001
+Interwoven Signals:
+	SIGX: 101101101101101
+	SIGY: 00000000
+
+Found Possible Signal: 100010101100010101100010
+Interwoven Signals:
+	SIGX: 101101101101101
+	SIGY: 000000000
+
+Found Possible Signal: 1000101011000101011000101
+Interwoven Signals:
+	SIGX: 1011011011011011
+	SIGY: 000000000
+
+Found Possible Signal: 10001010110001010110001010
+Interwoven Signals:
+	SIGX: 1011011011011011
+	SIGY: 0000000000
+
+Found Possible Signal: 100010101100010101100010101
+Interwoven Signals:
+	SIGX: 101101101101101101
+	SIGY: 000000000
+
+Found Possible Signal: 1000101011000101011000101011
+Interwoven Signals:
+	SIGX: 1011011011011011011
+	SIGY: 000000000
+
+Found Possible Signal: 10001010110001010110001010110
+Interwoven Signals:
+	SIGX: 1011011011011011011
+	SIGY: 0000000000
+
+Found Possible Signal: 100010101100010101100010101100
+Interwoven Signals:
+	SIGX: 1011011011011011011
+	SIGY: 00000000000
+
+Found Possible Signal: 1000101011000101011000101011000
+Interwoven Signals:
+	SIGX: 1011011011011011011
+	SIGY: 000000000000
+
+Found Possible Signal: 10001010110001010110001010110001
+Interwoven Signals:
+	SIGX: 101101101101101101101
+	SIGY: 00000000000
+
+Found Possible Signal: 100010101100010101100010101100010
+Interwoven Signals:
+	SIGX: 101101101101101101101
+	SIGY: 000000000000
+
+Found Possible Signal: 1000101011000101011000101011000101
+Interwoven Signals:
+	SIGX: 1011011011011011011011
+	SIGY: 000000000000
+
+Found Possible Signal: 10001010110001010110001010110001010
+Interwoven Signals:
+	SIGX: 1011011011011011011011
+	SIGY: 0000000000000
+
+Found Possible Signal: 100010101100010101100010101100010101
+Interwoven Signals:
+	SIGX: 101101101101101101101101
+	SIGY: 000000000000
+
+Found Possible Signal: 1000101011000101011000101011000101011
+Interwoven Signals:
+	SIGX: 1011011011011011011011011
+	SIGY: 000000000000
+
+Found Possible Signal: 10001010110001010110001010110001010110
+Interwoven Signals:
+	SIGX: 1011011011011011011011011
+	SIGY: 0000000000000
+
+Found Possible Signal: 100010101100010101100010101100010101100
+Interwoven Signals:
+	SIGX: 1011011011011011011011011
+	SIGY: 00000000000000
+
+Found Possible Signal: 1000101011000101011000101011000101011000
+Interwoven Signals:
+	SIGX: 1011011011011011011011011
+	SIGY: 000000000000000
+
+Found Possible Signal: 10001010110001010110001010110001010110001
+Interwoven Signals:
+	SIGX: 101101101101101101101101101
+	SIGY: 00000000000000
+
+Found Possible Signal: 100010101100010101100010101100010101100010
+Interwoven Signals:
+	SIGX: 101101101101101101101101101
+	SIGY: 000000000000000
+
+Found Possible Signal: 1000101011000101011000101011000101011000101
+Interwoven Signals:
+	SIGX: 1011011011011011011011011011
+	SIGY: 000000000000000
+
+Found Possible Signal: 10001010110001010110001010110001010110001010
+Interwoven Signals:
+	SIGX: 1011011011011011011011011011
+	SIGY: 0000000000000000
+
+Found Possible Signal: 100010101100010101100010101100010101100010101
+Interwoven Signals:
+	SIGX: 101101101101101101101101101101
+	SIGY: 000000000000000
+
+Found Possible Signal: 1
+Invalid Signal
+
+Found Possible Signal: 10
+Invalid Signal
+
+Found Possible Signal: 100
+Invalid Signal
+
+Found Possible Signal: 1000
+Invalid Signal
+
+Found Possible Signal: 10001
+Interwoven Signals:
+	SIGX: 101
+	SIGY: 00
+
+Found Possible Signal: 1
+Invalid Signal
+
+Best Match:
+	SIGX: 101101101101101101101101101101
+	SIGY: 000000000000000
+         103511 function calls in 0.017 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.017    0.017 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:11(__init__)
+       72    0.000    0.000    0.001    0.000 signal-processor.py:134(reconstruct_matches)
+       58    0.000    0.000    0.000    0.000 signal-processor.py:194(is_better_signal)
+       89    0.000    0.000    0.000    0.000 signal-processor.py:24(network_read)
+        1    0.000    0.000    0.017    0.017 signal-processor.py:256(main)
+       72    0.000    0.000    0.000    0.000 signal-processor.py:33(next_signal)
+      161    0.000    0.000    0.000    0.000 signal-processor.py:64(has_next)
+       72    0.012    0.000    0.016    0.000 signal-processor.py:78(signal_processor_dp)
+        1    0.000    0.000    0.017    0.017 {built-in method builtins.exec}
+    82056    0.003    0.000    0.003    0.000 {built-in method builtins.len}
+      335    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+    20460    0.001    0.000    0.001    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+      130    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'union' of 'set' objects}
+
+

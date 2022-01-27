@@ -1,0 +1,158 @@
+Input:
+00
+11
+@@10001010110001010110@@@@
+
+
+Output:
+
+Found Possible Signal: 10001010110001010110
+Interwoven Signals:
+	SIGX: 00000000000
+	SIGY: 111111111
+
+Best Match:
+	SIGX: 00000000000
+	SIGY: 111111111
+         1303 function calls in 0.000 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:11(__init__)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:134(reconstruct_matches)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:194(is_better_signal)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:256(main)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:33(next_signal)
+        2    0.000    0.000    0.000    0.000 signal-processor.py:64(has_next)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:78(signal_processor_dp)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.exec}
+     1029    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+        8    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+      252    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        2    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'union' of 'set' objects}
+
+
+Output (with --stream):
+
+Found Possible Signal: 1
+Invalid Signal
+
+Found Possible Signal: 10
+Invalid Signal
+
+Found Possible Signal: 100
+Invalid Signal
+
+Found Possible Signal: 1000
+Invalid Signal
+
+Found Possible Signal: 10001
+Interwoven Signals:
+	SIGX: 000
+	SIGY: 11
+
+Found Possible Signal: 100010
+Interwoven Signals:
+	SIGX: 0000
+	SIGY: 11
+
+Found Possible Signal: 1000101
+Interwoven Signals:
+	SIGX: 0000
+	SIGY: 111
+
+Found Possible Signal: 10001010
+Interwoven Signals:
+	SIGX: 00000
+	SIGY: 111
+
+Found Possible Signal: 100010101
+Interwoven Signals:
+	SIGX: 00000
+	SIGY: 1111
+
+Found Possible Signal: 1000101011
+Interwoven Signals:
+	SIGX: 00000
+	SIGY: 11111
+
+Found Possible Signal: 10001010110
+Interwoven Signals:
+	SIGX: 000000
+	SIGY: 11111
+
+Found Possible Signal: 100010101100
+Interwoven Signals:
+	SIGX: 0000000
+	SIGY: 11111
+
+Found Possible Signal: 1000101011000
+Interwoven Signals:
+	SIGX: 00000000
+	SIGY: 11111
+
+Found Possible Signal: 10001010110001
+Interwoven Signals:
+	SIGX: 00000000
+	SIGY: 111111
+
+Found Possible Signal: 100010101100010
+Interwoven Signals:
+	SIGX: 000000000
+	SIGY: 111111
+
+Found Possible Signal: 1000101011000101
+Interwoven Signals:
+	SIGX: 000000000
+	SIGY: 1111111
+
+Found Possible Signal: 10001010110001010
+Interwoven Signals:
+	SIGX: 0000000000
+	SIGY: 1111111
+
+Found Possible Signal: 100010101100010101
+Interwoven Signals:
+	SIGX: 0000000000
+	SIGY: 11111111
+
+Found Possible Signal: 1000101011000101011
+Interwoven Signals:
+	SIGX: 0000000000
+	SIGY: 111111111
+
+Found Possible Signal: 10001010110001010110
+Interwoven Signals:
+	SIGX: 00000000000
+	SIGY: 111111111
+
+Best Match:
+	SIGX: 00000000000
+	SIGY: 111111111
+         10428 function calls in 0.002 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.002    0.002 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 signal-processor.py:11(__init__)
+       20    0.000    0.000    0.000    0.000 signal-processor.py:134(reconstruct_matches)
+       16    0.000    0.000    0.000    0.000 signal-processor.py:194(is_better_signal)
+       26    0.000    0.000    0.000    0.000 signal-processor.py:24(network_read)
+        1    0.000    0.000    0.002    0.002 signal-processor.py:256(main)
+       20    0.000    0.000    0.000    0.000 signal-processor.py:33(next_signal)
+       46    0.000    0.000    0.000    0.000 signal-processor.py:64(has_next)
+       20    0.001    0.000    0.002    0.000 signal-processor.py:78(signal_processor_dp)
+        1    0.000    0.000    0.002    0.002 {built-in method builtins.exec}
+     8141    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+       95    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+     2000    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+       38    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {method 'union' of 'set' objects}
+
+
